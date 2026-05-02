@@ -2,7 +2,8 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bloqueio de Zoom Automático (Essencial para não atrapalhar a digitação no celular) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DK Store - Gestão</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
@@ -72,7 +73,12 @@
         /* Estilo do Catálogo Vitrine */
         .grid-catalogo { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; margin-top: 20px; }
         .card-catalogo { background: #fff; border-radius: 12px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; display: flex; flex-direction: column; transition: opacity 0.3s;}
-        .card-catalogo img { width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
+        
+        /* NOVO: CSS do Carrossel de Fotos (Quando tiver várias fotos) */
+        .carrossel-fotos { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 10px; margin-bottom: 10px; border-radius: 8px; scrollbar-width: none; }
+        .carrossel-fotos::-webkit-scrollbar { display: none; }
+        .carrossel-fotos img { flex: 0 0 100%; scroll-snap-align: center; height: 250px; object-fit: cover; border-radius: 8px; }
+        
         .card-catalogo h4 { margin: 0 0 5px 0; font-size: 16px; color: var(--texto-escuro); }
         .card-catalogo p { margin: 0; font-weight: bold; color: var(--dourado); font-size: 18px; margin-bottom: 10px; }
         
@@ -291,9 +297,8 @@
                 
                 <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #eee;">
                     <div class="form-grupo">
-                        <label>Seu WhatsApp (Para a cliente enviar o pedido direto para você)</label>
-                        <input type="text" id="catSeuZap" placeholder="Ex: 5564999999999" required>
-                        <span style="font-size: 11px; color:#888;">Coloque o DDI (55) e o DDD. Ex: 5511999999999</span>
+                        <label>Seu WhatsApp (Para receber os pedidos)</label>
+                        <input type="text" id="catSeuZap" placeholder="Ex: 5511999999999" required>
                     </div>
                     <div class="form-grupo">
                         <label>Selecionar Cliente (Para personalizar o link)</label>
@@ -306,7 +311,7 @@
                             <option value="tudo">Mostrar o Estoque Completo</option>
                         </select>
                     </div>
-                    
+
                     <!-- NOVOS FILTROS AVANÇADOS -->
                     <div class="form-grupo" style="background: #e8f5e9; padding: 15px; border-radius: 8px; border: 1px dashed #4caf50;">
                         <label style="color: #2e7d32; margin-bottom: 10px;">Filtros Manuais Extras (Opcional)</label>
@@ -325,7 +330,7 @@
                             </div>
                         </div>
                     </div>
-
+                    
                     <button onclick="gerarPreviaCatalogo()" class="btn-acao" style="background: var(--dourado);">👁️ Gerar e Revisar Catálogo</button>
                 </div>
 
@@ -350,7 +355,7 @@
     </div>
 
     <!-- ================= MODAIS ADMIN ================= -->
-    <!-- MODAL CADASTRO PRODUTO -->
+    <!-- MODAL CADASTRO PRODUTO (NOVO: Múltiplas Fotos e Data Entrada) -->
     <div id="modalCadastroProduto" class="modal-overlay">
         <div class="modal-content">
             <h3 style="border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px;">Cadastrar Peça</h3>
@@ -373,7 +378,12 @@
                     </div>
                     <div id="listaCadastroVariacoes"><p style="font-size: 12px; color: #666; margin: 0;">Nenhum tamanho.</p></div>
                 </div>
-                <div class="form-grupo"><label>Foto da Peça</label><input type="file" id="fotoProduto" accept="image/*" required></div>
+                <!-- NOVO: Suporta múltiplas fotos -->
+                <div class="form-grupo">
+                    <label>Fotos da Peça</label>
+                    <input type="file" id="fotoProduto" accept="image/*" multiple required>
+                    <span style="font-size: 11px; color: #666;">Você pode selecionar várias fotos de uma vez.</span>
+                </div>
                 <div style="display: flex; gap: 10px;">
                     <button type="submit" class="btn-acao" id="btnSalvar">Salvar no Estoque</button>
                     <button type="button" onclick="fecharModal('modalCadastroProduto')" class="btn-ctrl" style="padding: 12px 20px;">Cancelar</button>
@@ -383,6 +393,7 @@
         </div>
     </div>
 
+    <!-- MODAL CADASTRO CLIENTE -->
     <div id="modalCadastroCliente" class="modal-overlay">
         <div class="modal-content">
             <h3 style="border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px;">Cadastrar Cliente</h3>
@@ -411,6 +422,7 @@
         </div>
     </div>
 
+    <!-- MODAL GERENCIAR ESTOQUE -->
     <div id="modalGerenciar" class="modal-overlay">
         <div class="modal-content">
             <h3 id="modalNomeProduto">Gerenciar Peça</h3>
@@ -430,7 +442,7 @@
         </div>
     </div>
 
-    <!-- MODAL VENDER (Venda Manual no Painel) -->
+    <!-- MODAL VENDER MANUAIS -->
     <div id="modalVender" class="modal-overlay">
         <div class="modal-content">
             <h3 id="vendaNomeProduto" style="color: var(--dourado);">Registrar Venda Manual</h3>
@@ -624,13 +636,23 @@
         if(document.getElementById('formProduto')) {
             document.getElementById('formProduto').onsubmit = async (e) => {
                 e.preventDefault(); if(vCad.length === 0) return alert("Adicione tamanhos!");
-                const btn = document.getElementById('btnSalvar'); const msg = document.getElementById('mensagemStatus'); btn.disabled = true; msg.innerText = "Enviando...";
+                const btn = document.getElementById('btnSalvar'); const msg = document.getElementById('mensagemStatus'); btn.disabled = true; msg.innerText = "Enviando fotos...";
                 try {
-                    const fotoBlob = await comprimirImagem(document.getElementById('fotoProduto').files[0]);
                     const nome = document.getElementById('nomeProduto').value; const sku = gerarSKU();
                     const dataEntradaNova = document.getElementById('dataEntradaProduto').value;
-                    const path = `produtos/${Date.now()}_img.jpg`; const sRef = ref(storage, path);
-                    await uploadBytes(sRef, fotoBlob); const url = await getDownloadURL(sRef);
+                    
+                    // NOVO: Faz upload de TODAS as fotos selecionadas
+                    const files = document.getElementById('fotoProduto').files;
+                    let urlsImagem = []; let caminhosStorage = [];
+                    for(let i=0; i<files.length; i++) {
+                        const fotoBlob = await comprimirImagem(files[i]);
+                        const path = `produtos/${Date.now()}_${Math.floor(Math.random()*1000)}_img.jpg`;
+                        const sRef = ref(storage, path);
+                        await uploadBytes(sRef, fotoBlob);
+                        const url = await getDownloadURL(sRef);
+                        urlsImagem.push(url); caminhosStorage.push(path);
+                    }
+
                     await addDoc(collection(db, "produtos"), { 
                         nome, 
                         codigo: sku, 
@@ -638,12 +660,14 @@
                         valor: parseFloat(document.getElementById('valorProduto').value), 
                         dataEntrada: dataEntradaNova,
                         variacoes: vCad, 
-                        urlImagem: url, 
-                        caminhoStorage: path, 
+                        urlsImagem: urlsImagem, // Salva o array de urls
+                        urlImagem: urlsImagem[0], // Salva a primeira como capa principal p/ retrocompatibilidade
+                        caminhosStorage: caminhosStorage, // Salva os caminhos
                         dataCadastro: Date.now() 
                     });
+                    
                     msg.style.color = "green"; msg.innerText = "Sucesso!"; e.target.reset(); vCad = []; document.getElementById('listaCadastroVariacoes').innerHTML = ''; fecharModal('modalCadastroProduto'); carregarProdutosAdmin();
-                } catch (err) { msg.style.color = "red"; msg.innerText = "Erro."; } finally { btn.disabled = false; }
+                } catch (err) { msg.style.color = "red"; msg.innerText = "Erro ao salvar."; } finally { btn.disabled = false; }
             };
         }
 
@@ -655,12 +679,28 @@
                 snap.forEach(doc => {
                     const p = doc.data(); pMemoria[doc.id] = p; const temEst = p.variacoes.some(v => v.quantidade > 0);
                     const codTxt = p.codigo ? `<span class="badge-cod">(#${p.codigo})</span>` : '';
-                    div.innerHTML += `<div class="item-produto" data-nome="${p.nome.toLowerCase()}" data-cod="${(p.codigo||'').toLowerCase()}"><img src="${p.urlImagem}"><div class="item-info"><h4>${p.nome} ${codTxt}</h4><div>${p.variacoes.map(v => `<span class="badge-tam">${v.tamanho}: ${v.quantidade}</span>`).join('')}</div><p class="preco">R$ ${p.valor.toFixed(2).replace('.', ',')}</p></div><div class="item-acoes">${temEst ? `<button onclick="abrirModalVenda('${doc.id}')" class="btn-acao btn-vender">Vender</button>` : '<span style="color:red;font-weight:bold;text-align:center;font-size:12px;">ESGOTADO</span>'}<button onclick="abrirModal('${doc.id}')" class="btn-acao">Gerenciar</button><button onclick="excluirProduto('${doc.id}','${p.nome}')" class="btn-acao btn-excluir">Excluir</button></div></div>`;
+                    const imgSrc = (p.urlsImagem && p.urlsImagem.length > 0) ? p.urlsImagem[0] : p.urlImagem;
+                    
+                    div.innerHTML += `<div class="item-produto" data-nome="${p.nome.toLowerCase()}" data-cod="${(p.codigo||'').toLowerCase()}"><img src="${imgSrc}"><div class="item-info"><h4>${p.nome} ${codTxt}</h4><div>${p.variacoes.map(v => `<span class="badge-tam">${v.tamanho}: ${v.quantidade}</span>`).join('')}</div><p class="preco">R$ ${p.valor.toFixed(2).replace('.', ',')}</p></div><div class="item-acoes">${temEst ? `<button onclick="abrirModalVenda('${doc.id}')" class="btn-acao btn-vender">Vender</button>` : '<span style="color:red;font-weight:bold;text-align:center;font-size:12px;">ESGOTADO</span>'}<button onclick="abrirModal('${doc.id}')" class="btn-acao">Gerenciar</button><button onclick="excluirProduto('${doc.id}','${p.nome}')" class="btn-acao btn-excluir">Excluir</button></div></div>`;
                 });
             } catch (e) { div.innerHTML = 'Erro.'; }
         }
         window.filtrarEstoque = () => { const t = document.getElementById('buscaEstoque').value.toLowerCase(); document.querySelectorAll('#listaProdutos .item-produto').forEach(i => i.style.display = (i.dataset.nome.includes(t) || i.dataset.cod.includes(t)) ? 'flex' : 'none'); };
-        window.excluirProduto = async (id, n) => { if(confirm(`Excluir "${n}"?`)) { try { if(pMemoria[id].caminhoStorage) await deleteObject(ref(storage, pMemoria[id].caminhoStorage)); await deleteDoc(doc(db, "produtos", id)); carregarProdutosAdmin(); } catch(e){} } };
+        
+        window.excluirProduto = async (id, n) => { 
+            if(confirm(`Excluir "${n}"?`)) { 
+                try { 
+                    const p = pMemoria[id];
+                    // Exclui todas as fotos do Firebase Storage
+                    if(p.caminhosStorage && p.caminhosStorage.length > 0) {
+                        for(let path of p.caminhosStorage) await deleteObject(ref(storage, path));
+                    } else if (p.caminhoStorage) {
+                        await deleteObject(ref(storage, p.caminhoStorage)); 
+                    }
+                    await deleteDoc(doc(db, "produtos", id)); carregarProdutosAdmin(); 
+                } catch(e){} 
+            } 
+        };
 
         let idEdit = null; let vEdit = [];
         window.abrirModal = (id) => { idEdit = id; vEdit = JSON.parse(JSON.stringify(pMemoria[id].variacoes||[])); document.getElementById('modalNomeProduto').innerText = pMemoria[id].nome; renderM(); document.getElementById('modalGerenciar').style.display = 'flex'; };
@@ -771,14 +811,53 @@
         window.renderizarHistoricoClienteModal = () => {
             const fM = document.getElementById('filtroMesHistCli').value; const hDiv = document.getElementById('detalheCliHistorico');
             let hist = cliMemoria[idCliAtivo].historicoCompras || [];
-            if(fM) { hist = hist.filter(h => new Date(h.data).toISOString().slice(0,7) === fM); }
-            if(hist.length === 0) { hDiv.innerHTML = '<p style="font-size:13px;text-align:center;">Sem movimentos.</p>'; } 
+            
+            // Mapeando com o índice original para não bugar a exclusão na ordem reversa
+            let histMapeado = hist.map((h, i) => ({...h, originalIdx: i}));
+            if(fM) { histMapeado = histMapeado.filter(h => new Date(h.data).toISOString().slice(0,7) === fM); }
+            
+            if(histMapeado.length === 0) { hDiv.innerHTML = '<p style="font-size:13px;text-align:center;">Sem movimentos.</p>'; } 
             else {
-                hDiv.innerHTML = hist.slice().reverse().map(h => {
+                hDiv.innerHTML = histMapeado.slice().reverse().map(h => {
                     const isPag = h.tipo === 'pagamento';
-                    return `<div style="border-bottom: 1px solid #eee; padding: 10px 0; font-size: 13px;"><div style="display:flex; justify-content:space-between; margin-bottom:5px;"><b style="color:${isPag?'#2e7d32':'#c62828'}">${isPag?'Pagamento Recebido':'Compra'}</b><span style="color:#666;">${new Date(h.data).toLocaleDateString('pt-BR')}</span></div><div style="display:flex; justify-content:space-between;"><span>${h.descricao}</span><b>R$ ${h.valor.toFixed(2).replace('.',',')}</b></div></div>`;
+                    return `<div style="border-bottom: 1px solid #eee; padding: 10px 0; font-size: 13px;">
+                                <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                                    <b style="color:${isPag?'#2e7d32':'#c62828'}">${isPag?'Pagamento Recebido':'Compra'}</b>
+                                    <div style="display:flex; gap: 10px; align-items:center;">
+                                        <span style="color:#666;">${new Date(h.data).toLocaleDateString('pt-BR')}</span>
+                                        <button onclick="apagarHistoricoCli(${h.originalIdx})" style="background:none; border:none; color:red; cursor:pointer;" title="Apagar Registro">🗑️</button>
+                                    </div>
+                                </div>
+                                <div style="display:flex; justify-content:space-between;">
+                                    <span>${h.descricao}</span>
+                                    <b>R$ ${h.valor.toFixed(2).replace('.',',')}</b>
+                                </div>
+                            </div>`;
                 }).join('');
             }
+        };
+
+        // NOVO: Apagar transação do histórico e atualizar dívida
+        window.apagarHistoricoCli = async (idx) => {
+            if(!confirm("Deseja apagar este registro do histórico?\nA dívida da cliente será recalculada automaticamente.")) return;
+            const c = cliMemoria[idCliAtivo];
+            const item = c.historicoCompras[idx];
+            
+            let novaDivida = c.divida || 0;
+            if(item.tipo === 'compra' && item.pagamento === 'fiado') {
+                novaDivida -= item.valor; // Reverte a compra fiada
+            } else if (item.tipo === 'pagamento') {
+                novaDivida += item.valor; // Reverte o pagamento (dívida volta)
+            }
+            if(novaDivida < 0) novaDivida = 0;
+            
+            c.historicoCompras.splice(idx, 1);
+            
+            try {
+                await updateDoc(doc(db, "clientes", idCliAtivo), { historicoCompras: c.historicoCompras, divida: novaDivida });
+                await carregarClientesDb();
+                abrirModalCliente(idCliAtivo); // Recarrega o modal atual
+            } catch(e) { alert("Erro ao apagar registro."); }
         };
 
         window.abaterDividaCli = async () => {
@@ -913,7 +992,6 @@
             const modo = document.getElementById('catModoEnvio').value;
             const zap = document.getElementById('catSeuZap').value.replace(/\D/g,'');
             
-            // Lendo os novos filtros avançados
             const fTam = document.getElementById('catFiltroTam').value.trim().toUpperCase();
             const fPreco = parseFloat(document.getElementById('catFiltroPreco').value);
             const fData = document.getElementById('catFiltroData').value;
@@ -935,29 +1013,27 @@
                 
                 let mostrar = true;
                 
-                // Filtro 1: Modo de envio (Tamanhos da cliente salvo no CRM)
                 if(modo === 'tamanho' && tamsCliente.length > 0) {
                     if(!varsDisp.some(v => tamsCliente.includes(v.tamanho))) mostrar = false;
                 }
                 
-                // Filtro 2: Tamanho Exato Forçado
                 if(fTam && !varsDisp.some(v => v.tamanho === fTam)) mostrar = false;
-                
-                // Filtro 3: Preço Máximo
                 if(!isNaN(fPreco) && p.valor > fPreco) mostrar = false;
-                
-                // Filtro 4: Data de Entrada (Peças novas)
                 if(fData) {
-                    // Pega a data de entrada (ou usa a data de cadastro se a peça for das antigas)
                     const dataItem = p.dataEntrada || new Date(p.dataCadastro).toISOString().slice(0, 10);
-                    if(dataItem < fData) mostrar = false; // Oculta peças que chegaram ANTES da data filtrada
+                    if(dataItem < fData) mostrar = false; 
                 }
                 
                 if(mostrar) {
                     achouAlgo = true;
+                    // Renderiza o carrossel na prévia também
+                    const imagensHtml = (p.urlsImagem && p.urlsImagem.length > 0) 
+                        ? `<div class="carrossel-fotos">${p.urlsImagem.map(u => `<img src="${u}">`).join('')}</div>`
+                        : `<img src="${p.urlImagem}">`;
+
                     grid.innerHTML += `
                         <div class="card-catalogo" id="prevCard_${id}" style="transition: opacity 0.3s;">
-                            <img src="${p.urlImagem}">
+                            ${imagensHtml}
                             <h4>${p.nome} <span style="font-size:11px; color:#999;">(#${p.codigo || 'S/N'})</span></h4>
                             <div style="margin-bottom: 10px;">
                                 <label style="font-size: 12px; font-weight: bold;">Preço R$:</label>
@@ -1007,11 +1083,14 @@
                 if(!previaIdsExcluidos.includes(id) && document.getElementById(`prevCard_${id}`)) {
                     const precoCustom = parseFloat(document.getElementById(`precoCust_${id}`).value);
                     const varsDisp = p.variacoes.filter(v => v.quantidade > 0);
+                    // Pega as fotos novas se existirem, senão pega a antiga
+                    const fotosAtuais = (p.urlsImagem && p.urlsImagem.length > 0) ? p.urlsImagem : [p.urlImagem];
+                    
                     itensParaSalvar.push({
                         idProd: id,
                         nome: p.nome,
                         codigo: p.codigo || 'S/N',
-                        urlImagem: p.urlImagem,
+                        urlsImagem: fotosAtuais,
                         preco: precoCustom,
                         variacoes: varsDisp.map(v => v.tamanho)
                     });
@@ -1075,9 +1154,13 @@
                 }
 
                 itens.forEach(p => {
+                    const imagensHtml = (p.urlsImagem && p.urlsImagem.length > 0) 
+                        ? `<div class="carrossel-fotos">${p.urlsImagem.map(u => `<img src="${u}">`).join('')}</div>`
+                        : `<img src="logo.jpeg">`;
+
                     grid.innerHTML += `
                         <div class="card-catalogo">
-                            <img src="${p.urlImagem}" onerror="this.src='logo.jpeg'">
+                            ${imagensHtml}
                             <h4>${p.nome} <span style="font-size:11px; color:#999;">(#${p.codigo})</span></h4>
                             <p>R$ ${p.preco.toFixed(2).replace('.', ',')}</p>
                             <div style="display:flex; gap:5px; margin-bottom:10px;">
