@@ -120,6 +120,7 @@
         </div>
     </div>
 
+    <!-- Modal Resumo Carrinho Cliente -->
     <div id="modalCarrinhoCliente" class="modal-overlay" style="z-index: 10000;">
         <div class="modal-content">
             <h3 style="border-bottom: 2px solid var(--dourado); padding-bottom: 10px;">Resumo do seu Pedido</h3>
@@ -156,6 +157,7 @@
 
         <div class="painel-container">
             
+            <!-- ABA: DASHBOARD -->
             <div id="dashboard" class="aba ativa">
                 <h2>Visão Geral da Loja</h2>
                 <div style="margin-bottom: 20px; background: #f0f0f0; padding: 15px; border-radius: 8px;">
@@ -182,6 +184,7 @@
                 </div>
             </div>
 
+            <!-- ABA: PEDIDOS SITE -->
             <div id="pedidos" class="aba">
                 <h2>Pedidos Recebidos do Site</h2>
                 <p style="font-size: 14px; color: #666;">Gerencie os pedidos novos e consulte o histórico geral.</p>
@@ -200,6 +203,7 @@
                 <div id="listaPedidosHistorico" class="lista-container" style="display: none;"><p>Carregando histórico...</p></div>
             </div>
 
+            <!-- ABA: ESTOQUE -->
             <div id="estoque" class="aba">
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px; margin-bottom: 20px;">
                     <h2 style="border: none; margin: 0; padding: 0;">Estoque e Peças</h2>
@@ -212,6 +216,7 @@
                 <div id="listaProdutos" class="lista-container"><p>Carregando peças...</p></div>
             </div>
 
+            <!-- ABA: CAIXA -->
             <div id="caixa" class="aba">
                 <h2>Fluxo de Caixa</h2>
                 <div style="display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
@@ -268,6 +273,7 @@
                 </div>
             </div>
 
+            <!-- ABA: CLIENTES -->
             <div id="clientes" class="aba">
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px; margin-bottom: 20px;">
                     <h2 style="border: none; margin: 0; padding: 0;">Gestão de Clientes</h2>
@@ -283,6 +289,7 @@
                 <div id="listaClientesRender" class="lista-container"></div>
             </div>
 
+            <!-- ABA: GERAR CATÁLOGO -->
             <div id="gerar-catalogo" class="aba">
                 <h2>Catálogo VIP</h2>
                 <p style="font-size: 14px; color: #666;">Monte um catálogo personalizado para enviar pelo WhatsApp.</p>
@@ -304,12 +311,17 @@
                         </select>
                     </div>
 
+                    <!-- FILTROS AVANÇADOS (AGORA COM MÚLTIPLOS TAMANHOS) -->
                     <div class="form-grupo" style="background: #e8f5e9; padding: 15px; border-radius: 8px; border: 1px dashed #4caf50;">
                         <label style="color: #2e7d32; margin-bottom: 10px;">Filtros Manuais Extras (Opcional)</label>
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                            <div style="flex: 1; min-width: 100px;">
-                                <label style="font-size: 12px;">Tamanho Exato</label>
-                                <input type="text" id="catFiltroTam" placeholder="Ex: M" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
+                            <div style="flex: 2; min-width: 150px;">
+                                <label style="font-size: 12px;">Tamanhos Específicos</label>
+                                <div style="display: flex; gap: 5px;">
+                                    <input type="text" id="catInputFiltroTam" placeholder="Ex: M, 42" style="flex: 1; padding: 8px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
+                                    <button type="button" onclick="addTamFiltroCat()" class="btn-ctrl" style="background: var(--verde-salvia); color: white; border: none; padding: 0 10px;">+ Add</button>
+                                </div>
+                                <div id="listaTamFiltroCat" style="margin-top: 5px;"></div>
                             </div>
                             <div style="flex: 1; min-width: 100px;">
                                 <label style="font-size: 12px;">Preço Máx (R$)</label>
@@ -325,6 +337,7 @@
                     <button onclick="gerarPreviaCatalogo()" class="btn-acao" style="background: var(--dourado);">👁️ Gerar e Revisar Catálogo</button>
                 </div>
 
+                <!-- PREVIEW DO CATÁLOGO ANTES DE ENVIAR -->
                 <div id="areaPreviewCatalogo" style="display: none; margin-top: 30px; border-top: 2px dashed #ccc; padding-top: 20px;">
                     <h3>Revisão: O que a cliente vai ver</h3>
                     <p style="font-size: 13px; color: #666;">Altere os preços para dar desconto ou clique em Ocultar para remover da vitrine.</p>
@@ -441,6 +454,7 @@
         </div>
     </div>
 
+    <!-- MODAL VENDER MANUAIS -->
     <div id="modalVender" class="modal-overlay">
         <div class="modal-content">
             <h3 id="vendaNomeProduto" style="color: var(--dourado);">Registrar Venda Manual</h3>
@@ -466,6 +480,7 @@
         </div>
     </div>
 
+    <!-- MODAL PROCESSAR PEDIDO DO SITE -->
     <div id="modalProcessarPedido" class="modal-overlay">
         <div class="modal-content">
             <h3 style="color: var(--dourado); border-bottom: 2px solid var(--dourado); padding-bottom: 10px;">Processar Pedido do Site</h3>
@@ -493,6 +508,7 @@
         </div>
     </div>
 
+    <!-- MODAL PERFIL CLIENTE -->
     <div id="modalClienteDetalhe" class="modal-overlay">
         <div class="modal-content" style="max-width: 650px;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px; margin-bottom: 15px;">
@@ -522,6 +538,7 @@
         </div>
     </div>
 
+    <!-- MODAL EDITAR CLIENTE -->
     <div id="modalEditarCliente" class="modal-overlay">
         <div class="modal-content">
             <h3 style="border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px;">Editar Cliente</h3>
@@ -547,6 +564,7 @@
         </div>
     </div>
 
+    <!-- SCRIPT PRINCIPAL E FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, updateDoc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
@@ -1064,7 +1082,7 @@
                                 h.itensVendidos.forEach(iv => {
                                     const pNome = pMemoria[iv.id] ? pMemoria[iv.id].nome : 'Peça Excluída';
                                     prodRanking[iv.id] = prodRanking[iv.id] || { nome: pNome, total: 0, qtd: 0 }; 
-                                    prodRanking[iv.id].total += h.valor; // Rateio ideal precisaria do preço do item.
+                                    prodRanking[iv.id].total += h.valor; 
                                     prodRanking[iv.id].qtd += iv.qtd; 
                                 });
                             }
@@ -1085,6 +1103,8 @@
 
         // ================= 6. GERADOR DE CATÁLOGO (ADMIN) =================
         let previaIdsExcluidos = [];
+        let tamsFiltroCat = []; // Variável para os badges de tamanhos do filtro
+
         function popCatClientes() {
             if(!document.getElementById('catSelectCliente')) return;
             let options = `<option value="avulso">Cliente sem cadastro (Catálogo Geral)</option>`;
@@ -1092,12 +1112,30 @@
             document.getElementById('catSelectCliente').innerHTML = options;
         }
 
+        // Funções para gerenciar as "Etiquetas/Badges" no Filtro do Catálogo
+        window.addTamFiltroCat = () => { 
+            const t = document.getElementById('catInputFiltroTam').value.trim().toUpperCase(); 
+            if(t && !tamsFiltroCat.includes(t)) { 
+                tamsFiltroCat.push(t); 
+                renderTamFiltroCat(); 
+            } 
+            document.getElementById('catInputFiltroTam').value = ''; 
+        };
+        window.rmTamFiltroCat = (i) => { 
+            tamsFiltroCat.splice(i, 1); 
+            renderTamFiltroCat(); 
+        };
+        function renderTamFiltroCat() { 
+            const div = document.getElementById('listaTamFiltroCat');
+            if(tamsFiltroCat.length === 0) div.innerHTML = '';
+            else div.innerHTML = tamsFiltroCat.map((t, i) => `<span class="badge-tam">${t} <b onclick="rmTamFiltroCat(${i})" style="color:red; cursor:pointer;">X</b></span>`).join(''); 
+        }
+
         window.gerarPreviaCatalogo = async () => {
             const cid = document.getElementById('catSelectCliente').value;
             const modo = document.getElementById('catModoEnvio').value;
             const zap = document.getElementById('catSeuZap').value.replace(/\D/g,'');
             
-            const fTam = document.getElementById('catFiltroTam').value.trim().toUpperCase();
             const fPreco = parseFloat(document.getElementById('catFiltroPreco').value);
             const fData = document.getElementById('catFiltroData').value;
 
@@ -1118,11 +1156,17 @@
                 
                 let mostrar = true;
                 
+                // 1. Filtro do CRM da Cliente
                 if(modo === 'tamanho' && tamsCliente.length > 0) {
                     if(!varsDisp.some(v => tamsCliente.includes(v.tamanho))) mostrar = false;
                 }
                 
-                if(fTam && !varsDisp.some(v => v.tamanho === fTam)) mostrar = false;
+                // 2. Novo Filtro Dinâmico de Múltiplos Tamanhos
+                if(tamsFiltroCat.length > 0) {
+                    if(!varsDisp.some(v => tamsFiltroCat.includes(v.tamanho))) mostrar = false;
+                }
+                
+                // 3 e 4. Preço e Data
                 if(!isNaN(fPreco) && p.valor > fPreco) mostrar = false;
                 if(fData) {
                     const dataItem = p.dataEntrada || new Date(p.dataCadastro).toISOString().slice(0, 10);
