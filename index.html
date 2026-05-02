@@ -92,6 +92,9 @@
 </head>
 <body>
 
+    <!-- ==========================================
+         VISÃO PÚBLICA: CATÁLOGO (CLIENTE VÊ) 
+         ========================================== -->
     <div id="app-catalogo">
         <div style="text-align: center;">
             <img src="logo.jpeg" alt="DK Store Logo" style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%; margin-bottom: 10px; border: 3px solid var(--dourado); box-shadow: 0 4px 10px rgba(0,0,0,0.1);" onerror="this.style.display='none'">
@@ -112,6 +115,7 @@
         </div>
     </div>
 
+    <!-- Modal Resumo Carrinho Cliente -->
     <div id="modalCarrinhoCliente" class="modal-overlay" style="z-index: 10000;">
         <div class="modal-content">
             <h3 style="border-bottom: 2px solid var(--dourado); padding-bottom: 10px;">Resumo do seu Pedido</h3>
@@ -128,6 +132,9 @@
         </div>
     </div>
 
+    <!-- ==========================================
+         VISÃO ADMIN: GESTÃO DA LOJA 
+         ========================================== -->
     <div id="app-admin">
         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
             <img src="logo.jpeg" alt="Logo" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" onerror="this.style.display='none'">
@@ -145,6 +152,7 @@
 
         <div class="painel-container">
             
+            <!-- ABA: DASHBOARD -->
             <div id="dashboard" class="aba ativa">
                 <h2>Visão Geral da Loja</h2>
                 <div style="margin-bottom: 20px; background: #f0f0f0; padding: 15px; border-radius: 8px;">
@@ -171,6 +179,7 @@
                 </div>
             </div>
 
+            <!-- ABA: PEDIDOS SITE -->
             <div id="pedidos" class="aba">
                 <h2>Pedidos Recebidos do Site</h2>
                 <p style="font-size: 14px; color: #666;">Gerencie os pedidos novos e consulte o histórico geral.</p>
@@ -188,7 +197,8 @@
                 <div id="listaPedidosPendentes" class="lista-container"><p>Carregando...</p></div>
                 <div id="listaPedidosHistorico" class="lista-container" style="display: none;"><p>Carregando histórico...</p></div>
             </div>
-            
+
+            <!-- ABA: ESTOQUE -->
             <div id="estoque" class="aba">
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px; margin-bottom: 20px;">
                     <h2 style="border: none; margin: 0; padding: 0;">Estoque e Peças</h2>
@@ -201,6 +211,7 @@
                 <div id="listaProdutos" class="lista-container"><p>Carregando peças...</p></div>
             </div>
 
+            <!-- ABA: CAIXA -->
             <div id="caixa" class="aba">
                 <h2>Fluxo de Caixa</h2>
                 <div style="display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
@@ -257,6 +268,7 @@
                 </div>
             </div>
 
+            <!-- ABA: CLIENTES -->
             <div id="clientes" class="aba">
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px; margin-bottom: 20px;">
                     <h2 style="border: none; margin: 0; padding: 0;">Gestão de Clientes</h2>
@@ -272,6 +284,7 @@
                 <div id="listaClientesRender" class="lista-container"></div>
             </div>
 
+            <!-- ABA: GERAR CATÁLOGO -->
             <div id="gerar-catalogo" class="aba">
                 <h2>Catálogo VIP</h2>
                 <p style="font-size: 14px; color: #666;">Monte um catálogo personalizado para enviar pelo WhatsApp.</p>
@@ -283,7 +296,7 @@
                         <span style="font-size: 11px; color:#888;">Coloque o DDI (55) e o DDD. Ex: 5511999999999</span>
                     </div>
                     <div class="form-grupo">
-                        <label>Selecionar Cliente (Para personalizar e rastrear tamanhos)</label>
+                        <label>Selecionar Cliente (Para personalizar o link)</label>
                         <select id="catSelectCliente"></select>
                     </div>
                     <div class="form-grupo">
@@ -294,9 +307,29 @@
                         </select>
                     </div>
                     
+                    <!-- NOVOS FILTROS AVANÇADOS -->
+                    <div class="form-grupo" style="background: #e8f5e9; padding: 15px; border-radius: 8px; border: 1px dashed #4caf50;">
+                        <label style="color: #2e7d32; margin-bottom: 10px;">Filtros Manuais Extras (Opcional)</label>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 100px;">
+                                <label style="font-size: 12px;">Tamanho Exato</label>
+                                <input type="text" id="catFiltroTam" placeholder="Ex: M" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
+                            </div>
+                            <div style="flex: 1; min-width: 100px;">
+                                <label style="font-size: 12px;">Preço Máx (R$)</label>
+                                <input type="number" id="catFiltroPreco" placeholder="150.00" step="0.01" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
+                            </div>
+                            <div style="flex: 1; min-width: 100px;">
+                                <label style="font-size: 12px;">Entrou a partir de:</label>
+                                <input type="date" id="catFiltroData" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
+                            </div>
+                        </div>
+                    </div>
+
                     <button onclick="gerarPreviaCatalogo()" class="btn-acao" style="background: var(--dourado);">👁️ Gerar e Revisar Catálogo</button>
                 </div>
 
+                <!-- PREVIEW DO CATÁLOGO ANTES DE ENVIAR -->
                 <div id="areaPreviewCatalogo" style="display: none; margin-top: 30px; border-top: 2px dashed #ccc; padding-top: 20px;">
                     <h3>Revisão: O que a cliente vai ver</h3>
                     <p style="font-size: 13px; color: #666;">Altere os preços para dar desconto ou clique em Ocultar para remover da vitrine.</p>
@@ -316,13 +349,20 @@
         </div>
     </div>
 
+    <!-- ================= MODAIS ADMIN ================= -->
+    <!-- MODAL CADASTRO PRODUTO -->
     <div id="modalCadastroProduto" class="modal-overlay">
         <div class="modal-content">
             <h3 style="border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px;">Cadastrar Peça</h3>
             <form id="formProduto">
                 <div class="form-grupo"><label>Nome da Peça</label><input type="text" id="nomeProduto" required></div>
                 <div class="form-grupo"><label>Descrição Detalhada</label><textarea id="descProduto" rows="2" required></textarea></div>
-                <div class="form-grupo"><label>Valor Padrão (R$)</label><input type="number" id="valorProduto" step="0.01" required></div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-grupo" style="flex: 1;"><label>Valor Padrão (R$)</label><input type="number" id="valorProduto" step="0.01" required></div>
+                    <div class="form-grupo" style="flex: 1;"><label>Data de Entrada</label><input type="date" id="dataEntradaProduto" required></div>
+                </div>
+
                 <div class="form-grupo" style="background: #f4f4f4; padding: 15px; border-radius: 8px;">
                     <label>Adicionar Tamanhos e Quantidades</label>
                     <div style="display: flex; gap: 10px; margin-bottom: 10px;">
@@ -390,6 +430,7 @@
         </div>
     </div>
 
+    <!-- MODAL VENDER (Venda Manual no Painel) -->
     <div id="modalVender" class="modal-overlay">
         <div class="modal-content">
             <h3 id="vendaNomeProduto" style="color: var(--dourado);">Registrar Venda Manual</h3>
@@ -415,6 +456,7 @@
         </div>
     </div>
 
+    <!-- MODAL PROCESSAR PEDIDO DO SITE -->
     <div id="modalProcessarPedido" class="modal-overlay">
         <div class="modal-content">
             <h3 style="color: var(--dourado); border-bottom: 2px solid var(--dourado); padding-bottom: 10px;">Processar Pedido do Site</h3>
@@ -442,6 +484,7 @@
         </div>
     </div>
 
+    <!-- MODAL PERFIL CLIENTE -->
     <div id="modalClienteDetalhe" class="modal-overlay">
         <div class="modal-content" style="max-width: 650px;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px; margin-bottom: 15px;">
@@ -471,6 +514,7 @@
         </div>
     </div>
 
+    <!-- MODAL EDITAR CLIENTE -->
     <div id="modalEditarCliente" class="modal-overlay">
         <div class="modal-content">
             <h3 style="border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px;">Editar Cliente</h3>
@@ -496,6 +540,7 @@
         </div>
     </div>
 
+    <!-- SCRIPT PRINCIPAL E FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, updateDoc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
@@ -542,7 +587,11 @@
             if(idAba === 'pedidos') carregarPedidosPendentes();
         };
         window.fecharModal = (id) => document.getElementById(id).style.display = 'none';
-        window.abrirModalCadastro = () => document.getElementById('modalCadastroProduto').style.display = 'flex';
+        
+        window.abrirModalCadastro = () => { 
+            document.getElementById('modalCadastroProduto').style.display = 'flex';
+            document.getElementById('dataEntradaProduto').valueAsDate = new Date();
+        };
         window.abrirModalNovoCliente = () => document.getElementById('modalCadastroCliente').style.display = 'flex';
         
         function gerarSKU() { return Math.random().toString(36).substring(2, 6).toUpperCase(); }
@@ -579,9 +628,20 @@
                 try {
                     const fotoBlob = await comprimirImagem(document.getElementById('fotoProduto').files[0]);
                     const nome = document.getElementById('nomeProduto').value; const sku = gerarSKU();
+                    const dataEntradaNova = document.getElementById('dataEntradaProduto').value;
                     const path = `produtos/${Date.now()}_img.jpg`; const sRef = ref(storage, path);
                     await uploadBytes(sRef, fotoBlob); const url = await getDownloadURL(sRef);
-                    await addDoc(collection(db, "produtos"), { nome, codigo: sku, descricao: document.getElementById('descProduto').value, valor: parseFloat(document.getElementById('valorProduto').value), variacoes: vCad, urlImagem: url, caminhoStorage: path, dataCadastro: Date.now() });
+                    await addDoc(collection(db, "produtos"), { 
+                        nome, 
+                        codigo: sku, 
+                        descricao: document.getElementById('descProduto').value, 
+                        valor: parseFloat(document.getElementById('valorProduto').value), 
+                        dataEntrada: dataEntradaNova,
+                        variacoes: vCad, 
+                        urlImagem: url, 
+                        caminhoStorage: path, 
+                        dataCadastro: Date.now() 
+                    });
                     msg.style.color = "green"; msg.innerText = "Sucesso!"; e.target.reset(); vCad = []; document.getElementById('listaCadastroVariacoes').innerHTML = ''; fecharModal('modalCadastroProduto'); carregarProdutosAdmin();
                 } catch (err) { msg.style.color = "red"; msg.innerText = "Erro."; } finally { btn.disabled = false; }
             };
@@ -761,6 +821,7 @@
             window.esconderFiltroPeriodo = () => { document.getElementById('blocoPeriodo').style.display = 'none'; document.getElementById('btnMostrarPeriodo').style.display = 'block'; aplicarFiltroUnico(); };
             window.aplicarFiltroUnico = () => { const m = document.getElementById('filtroMesUnico').value; document.getElementById('filtroDataInicio').value = m; document.getElementById('filtroDataFim').value = m; carregarCaixa(); };
             window.aplicarFiltroPeriodo = () => { carregarCaixa(); };
+            carregarCaixa();
         }
 
         async function carregarCaixa() {
@@ -851,6 +912,12 @@
             const cid = document.getElementById('catSelectCliente').value;
             const modo = document.getElementById('catModoEnvio').value;
             const zap = document.getElementById('catSeuZap').value.replace(/\D/g,'');
+            
+            // Lendo os novos filtros avançados
+            const fTam = document.getElementById('catFiltroTam').value.trim().toUpperCase();
+            const fPreco = parseFloat(document.getElementById('catFiltroPreco').value);
+            const fData = document.getElementById('catFiltroData').value;
+
             if(!zap) return alert("Digite seu WhatsApp para receber os pedidos!");
             
             await setDoc(doc(db, "config", "loja"), { whatsapp: zap }, { merge: true });
@@ -867,8 +934,23 @@
                 if(varsDisp.length === 0) return;
                 
                 let mostrar = true;
+                
+                // Filtro 1: Modo de envio (Tamanhos da cliente salvo no CRM)
                 if(modo === 'tamanho' && tamsCliente.length > 0) {
                     if(!varsDisp.some(v => tamsCliente.includes(v.tamanho))) mostrar = false;
+                }
+                
+                // Filtro 2: Tamanho Exato Forçado
+                if(fTam && !varsDisp.some(v => v.tamanho === fTam)) mostrar = false;
+                
+                // Filtro 3: Preço Máximo
+                if(!isNaN(fPreco) && p.valor > fPreco) mostrar = false;
+                
+                // Filtro 4: Data de Entrada (Peças novas)
+                if(fData) {
+                    // Pega a data de entrada (ou usa a data de cadastro se a peça for das antigas)
+                    const dataItem = p.dataEntrada || new Date(p.dataCadastro).toISOString().slice(0, 10);
+                    if(dataItem < fData) mostrar = false; // Oculta peças que chegaram ANTES da data filtrada
                 }
                 
                 if(mostrar) {
@@ -885,7 +967,7 @@
                         </div>`;
                 }
             });
-            if(!achouAlgo) grid.innerHTML = '<p>Nenhuma peça para este filtro.</p>';
+            if(!achouAlgo) grid.innerHTML = '<p>Nenhuma peça encontrada para os filtros selecionados.</p>';
             
             document.getElementById('areaPreviewCatalogo').style.display = 'block';
             document.getElementById('linkGeradoInput').value = '';
@@ -1068,7 +1150,6 @@
             const pedidoId = Math.random().toString(36).substring(2, 8).toUpperCase();
             
             try {
-                // SALVA O PEDIDO NO BANCO DE DADOS (INVIOLÁVEL)
                 await addDoc(collection(db, "pedidos"), {
                     codigo: pedidoId,
                     clienteId: cliIdPublico || 'avulso',
@@ -1079,7 +1160,6 @@
                     data: Date.now()
                 });
                 
-                // MENSAGEM DO WHATSAPP (GENÉRICA COM RESUMO)
                 let texto = `*NOVO PEDIDO - DK STORE*\nPedido: *#${pedidoId}*\nCliente: *${nomeClientePub}*\n\n`;
                 carrinhoCatalogo.forEach(i => {
                     texto += `- ${i.nome} (${i.codigo}) - ${i.qtd}x - R$ ${i.preco.toFixed(2).replace('.',',')}\n`;
@@ -1087,7 +1167,7 @@
                 texto += `\n*TOTAL: R$ ${total.toFixed(2).replace('.',',')}*\n\n_Meu pedido já foi registrado no sistema e aguardo o link de pagamento!_`;
                 
                 alert("Pedido enviado com sucesso para a loja!");
-                window.location.reload(); // Limpa o carrinho
+                window.location.reload(); 
                 window.open(`https://wa.me/${lojaZapPublico}?text=${encodeURIComponent(texto)}`, '_blank');
             } catch(e) {
                 alert("Erro ao registrar pedido. Tente novamente.");
@@ -1098,7 +1178,6 @@
         // ================= 8. RECEPÇÃO DE PEDIDOS NO ADMIN E HISTÓRICO =================
         let pedidosPendentes = {};
 
-        // Controle das abas internas de pedidos
         window.alternarAbaPedidos = function(aba) {
             document.getElementById('btnAbaPendentes').classList.remove('ativo');
             document.getElementById('btnAbaHistorico').classList.remove('ativo');
@@ -1114,7 +1193,6 @@
             }
         };
 
-        // Filtro de Pesquisa (Código ou Nome da Cliente)
         window.filtrarPedidos = () => {
             const termo = document.getElementById('buscaPedidos').value.toLowerCase();
             document.querySelectorAll('#pedidos .item-produto').forEach(item => {
@@ -1165,7 +1243,6 @@
                             </div>
                         `;
                     } else {
-                        // É histórico (concluído ou cancelado)
                         temHistorico = true;
                         const corStatus = p.status === 'concluido' ? '#2e7d32' : '#c62828';
                         const textoStatus = p.status === 'concluido' ? 'Concluído' : 'Cancelado';
@@ -1189,7 +1266,6 @@
                 if(!temPendente) divP.innerHTML = '<p style="text-align:center;">Nenhum pedido pendente no momento.</p>';
                 if(divH && !temHistorico) divH.innerHTML = '<p style="text-align:center;">Nenhum histórico de pedidos.</p>';
                 
-                // Reaplica o filtro caso a pessoa atualize a tela com algo digitado na busca
                 filtrarPedidos();
             } catch(e) { 
                 divP.innerHTML = '<p>Erro ao carregar pedidos.</p>'; 
@@ -1235,7 +1311,6 @@
             if(ped.clienteId === 'avulso' && pag === 'fiado') { btn.disabled = false; btn.innerText = "✔ Aprovar e Dar Baixa"; return alert("Venda Fiado não permitida para Cliente Avulso."); }
 
             try {
-                // 1. CHECAR E DAR BAIXA NO ESTOQUE
                 for (let item of ped.itens) {
                     const prod = pMemoria[item.idProd || item.id];
                     if(!prod) return alert(`A peça ${item.nome} não existe mais no estoque!`);
@@ -1252,7 +1327,6 @@
                     await updateDoc(doc(db, "produtos", item.idProd || item.id), { variacoes: prod.variacoes });
                 }
 
-                // 2. ATUALIZA CAIXA OU CLIENTE
                 const descVenda = `Pedido Site #${ped.codigo} - ${ped.itens.length} peças`;
 
                 if(ped.clienteId !== 'avulso') {
@@ -1270,7 +1344,6 @@
                     await setDoc(dRef, { lancamentos: lC });
                 }
 
-                // 3. MARCA O PEDIDO COMO CONCLUÍDO NO BANCO
                 await updateDoc(doc(db, "pedidos", idPedidoAtivo), { status: 'concluido' });
 
                 alert("Venda do Site processada com sucesso!");
