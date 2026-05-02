@@ -73,7 +73,7 @@
         .grid-catalogo { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; margin-top: 20px; }
         .card-catalogo { background: #fff; border-radius: 12px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; display: flex; flex-direction: column; transition: opacity 0.3s;}
         
-        /* Carrossel de Fotos (Quando tiver várias fotos) */
+        /* Carrossel de Fotos */
         .carrossel-fotos { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 10px; margin-bottom: 10px; border-radius: 8px; scrollbar-width: none; }
         .carrossel-fotos::-webkit-scrollbar { display: none; }
         .carrossel-fotos img { flex: 0 0 100%; scroll-snap-align: center; height: 250px; object-fit: cover; border-radius: 8px; }
@@ -120,7 +120,6 @@
         </div>
     </div>
 
-    <!-- Modal Resumo Carrinho Cliente -->
     <div id="modalCarrinhoCliente" class="modal-overlay" style="z-index: 10000;">
         <div class="modal-content">
             <h3 style="border-bottom: 2px solid var(--dourado); padding-bottom: 10px;">Resumo do seu Pedido</h3>
@@ -157,7 +156,6 @@
 
         <div class="painel-container">
             
-            <!-- ABA: DASHBOARD -->
             <div id="dashboard" class="aba ativa">
                 <h2>Visão Geral da Loja</h2>
                 <div style="margin-bottom: 20px; background: #f0f0f0; padding: 15px; border-radius: 8px;">
@@ -184,7 +182,6 @@
                 </div>
             </div>
 
-            <!-- ABA: PEDIDOS SITE -->
             <div id="pedidos" class="aba">
                 <h2>Pedidos Recebidos do Site</h2>
                 <p style="font-size: 14px; color: #666;">Gerencie os pedidos novos e consulte o histórico geral.</p>
@@ -203,7 +200,6 @@
                 <div id="listaPedidosHistorico" class="lista-container" style="display: none;"><p>Carregando histórico...</p></div>
             </div>
 
-            <!-- ABA: ESTOQUE -->
             <div id="estoque" class="aba">
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px; margin-bottom: 20px;">
                     <h2 style="border: none; margin: 0; padding: 0;">Estoque e Peças</h2>
@@ -216,7 +212,6 @@
                 <div id="listaProdutos" class="lista-container"><p>Carregando peças...</p></div>
             </div>
 
-            <!-- ABA: CAIXA -->
             <div id="caixa" class="aba">
                 <h2>Fluxo de Caixa</h2>
                 <div style="display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
@@ -273,7 +268,6 @@
                 </div>
             </div>
 
-            <!-- ABA: CLIENTES -->
             <div id="clientes" class="aba">
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px; margin-bottom: 20px;">
                     <h2 style="border: none; margin: 0; padding: 0;">Gestão de Clientes</h2>
@@ -289,7 +283,6 @@
                 <div id="listaClientesRender" class="lista-container"></div>
             </div>
 
-            <!-- ABA: GERAR CATÁLOGO -->
             <div id="gerar-catalogo" class="aba">
                 <h2>Catálogo VIP</h2>
                 <p style="font-size: 14px; color: #666;">Monte um catálogo personalizado para enviar pelo WhatsApp.</p>
@@ -311,7 +304,6 @@
                         </select>
                     </div>
 
-                    <!-- FILTROS AVANÇADOS -->
                     <div class="form-grupo" style="background: #e8f5e9; padding: 15px; border-radius: 8px; border: 1px dashed #4caf50;">
                         <label style="color: #2e7d32; margin-bottom: 10px;">Filtros Manuais Extras (Opcional)</label>
                         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
@@ -333,7 +325,6 @@
                     <button onclick="gerarPreviaCatalogo()" class="btn-acao" style="background: var(--dourado);">👁️ Gerar e Revisar Catálogo</button>
                 </div>
 
-                <!-- PREVIEW DO CATÁLOGO ANTES DE ENVIAR -->
                 <div id="areaPreviewCatalogo" style="display: none; margin-top: 30px; border-top: 2px dashed #ccc; padding-top: 20px;">
                     <h3>Revisão: O que a cliente vai ver</h3>
                     <p style="font-size: 13px; color: #666;">Altere os preços para dar desconto ou clique em Ocultar para remover da vitrine.</p>
@@ -354,7 +345,6 @@
     </div>
 
     <!-- ================= MODAIS ADMIN ================= -->
-    <!-- MODAL CADASTRO PRODUTO -->
     <div id="modalCadastroProduto" class="modal-overlay">
         <div class="modal-content">
             <h3 style="border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px;">Cadastrar Peça</h3>
@@ -391,7 +381,6 @@
         </div>
     </div>
 
-    <!-- MODAL CADASTRO CLIENTE -->
     <div id="modalCadastroCliente" class="modal-overlay">
         <div class="modal-content">
             <h3 style="border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px;">Cadastrar Cliente</h3>
@@ -420,7 +409,6 @@
         </div>
     </div>
 
-    <!-- MODAL GERENCIAR ESTOQUE (COM GESTÃO DE FOTOS) -->
     <div id="modalGerenciar" class="modal-overlay">
         <div class="modal-content">
             <h3 id="modalNomeProduto">Gerenciar Peça</h3>
@@ -437,7 +425,6 @@
                 </div>
             </div>
 
-            <!-- NOVA SEÇÃO DE FOTOS NO GERENCIAR PEÇA -->
             <div style="border-bottom: 1px solid #ccc; padding-bottom: 15px; margin-bottom: 15px;">
                 <label style="font-weight: 600; font-size: 14px;">Fotos da Peça:</label>
                 <div id="modalFotosAtuais" style="display: flex; gap: 10px; overflow-x: auto; margin-top: 10px; margin-bottom: 10px; padding-bottom: 5px;"></div>
@@ -454,7 +441,6 @@
         </div>
     </div>
 
-    <!-- MODAL VENDER MANUAIS -->
     <div id="modalVender" class="modal-overlay">
         <div class="modal-content">
             <h3 id="vendaNomeProduto" style="color: var(--dourado);">Registrar Venda Manual</h3>
@@ -480,7 +466,6 @@
         </div>
     </div>
 
-    <!-- MODAL PROCESSAR PEDIDO DO SITE -->
     <div id="modalProcessarPedido" class="modal-overlay">
         <div class="modal-content">
             <h3 style="color: var(--dourado); border-bottom: 2px solid var(--dourado); padding-bottom: 10px;">Processar Pedido do Site</h3>
@@ -508,7 +493,6 @@
         </div>
     </div>
 
-    <!-- MODAL PERFIL CLIENTE -->
     <div id="modalClienteDetalhe" class="modal-overlay">
         <div class="modal-content" style="max-width: 650px;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px; margin-bottom: 15px;">
@@ -538,7 +522,6 @@
         </div>
     </div>
 
-    <!-- MODAL EDITAR CLIENTE -->
     <div id="modalEditarCliente" class="modal-overlay">
         <div class="modal-content">
             <h3 style="border-bottom: 2px solid var(--verde-salvia); padding-bottom: 10px;">Editar Cliente</h3>
@@ -564,7 +547,6 @@
         </div>
     </div>
 
-    <!-- SCRIPT PRINCIPAL E FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, updateDoc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
@@ -814,10 +796,11 @@
                 await updateDoc(doc(db, "produtos", idVendaAtiva), { variacoes: prod.variacoes });
                 const nCli = cId === 'avulso' ? 'Cliente Avulso' : cliMemoria[cId].nome; 
                 const dVenda = `Venda: ${prod.nome} (${q}x Tam: ${tSel})`;
+                const itensVendidosArr = [{ id: idVendaAtiva, tam: tSel, qtd: q }];
 
                 if(cId !== 'avulso') {
                     const nHist = cliMemoria[cId].historicoCompras || [];
-                    nHist.push({ data: Date.now(), tipo: 'compra', descricao: dVenda, valor: vFinal, pagamento: fPag, prodId: idVendaAtiva, prodNome: prod.nome });
+                    nHist.push({ data: Date.now(), tipo: 'compra', descricao: dVenda, valor: vFinal, pagamento: fPag, itensVendidos: itensVendidosArr });
                     let nDiv = cliMemoria[cId].divida || 0;
                     if (!fPag.includes('entrada')) nDiv += vFinal;
                     await updateDoc(doc(db, "clientes", cId), { historicoCompras: nHist, divida: nDiv });
@@ -826,7 +809,7 @@
                 if (fPag.includes('entrada')) {
                     const dRef = doc(db, "caixa", new Date().toISOString().slice(0, 7)); const sn = await getDoc(dRef); let lC = sn.exists() ? sn.data().lancamentos : [];
                     let txtPag = "PIX"; if(fPag==='entrada_credito') txtPag="C.Créd"; else if(fPag==='entrada_debito') txtPag="C.Déb"; else if(fPag==='entrada_dinheiro') txtPag="Dinheiro";
-                    lC.push({ descricao: `${dVenda} - Cliente: ${nCli} [${txtPag}]`, valor: vFinal, tipo: fPag, data: Date.now() });
+                    lC.push({ descricao: `${dVenda} - Cliente: ${nCli} [${txtPag}]`, valor: vFinal, tipo: fPag, data: Date.now(), itensVendidos: itensVendidosArr, clienteId: cId });
                     await setDoc(dRef, { lancamentos: lC });
                 }
 
@@ -896,7 +879,7 @@
                                     <b style="color:${isPag?'#2e7d32':'#c62828'}">${isPag?'Pagamento Recebido':'Compra'}</b>
                                     <div style="display:flex; gap: 10px; align-items:center;">
                                         <span style="color:#666;">${new Date(h.data).toLocaleDateString('pt-BR')}</span>
-                                        <button onclick="apagarHistoricoCli(${h.originalIdx})" style="background:none; border:none; color:red; cursor:pointer;" title="Apagar Registro">🗑️</button>
+                                        <button onclick="apagarHistoricoCli(${h.originalIdx})" style="background:none; border:none; color:red; cursor:pointer;" title="Apagar Registro e Devolver Estoque">🗑️</button>
                                     </div>
                                 </div>
                                 <div style="display:flex; justify-content:space-between;">
@@ -909,7 +892,7 @@
         };
 
         window.apagarHistoricoCli = async (idx) => {
-            if(!confirm("Deseja apagar este registro do histórico?\nA dívida da cliente será recalculada automaticamente.")) return;
+            if(!confirm("Deseja apagar este registro do histórico?\nSe for uma compra, as peças VOLTARÃO para o estoque. A dívida também será recalculada.")) return;
             const c = cliMemoria[idCliAtivo];
             const item = c.historicoCompras[idx];
             
@@ -920,6 +903,24 @@
                 novaDivida += item.valor;
             }
             if(novaDivida < 0) novaDivida = 0;
+
+            if (item.tipo === 'compra' && item.itensVendidos) {
+                for (let iv of item.itensVendidos) {
+                    try {
+                        const pRef = doc(db, "produtos", iv.id);
+                        const pSnap = await getDoc(pRef);
+                        if(pSnap.exists()) {
+                            let prodData = pSnap.data();
+                            let vIdx = prodData.variacoes.findIndex(v => v.tamanho === iv.tam);
+                            if(vIdx > -1) {
+                                prodData.variacoes[vIdx].quantidade += iv.qtd;
+                                await updateDoc(pRef, { variacoes: prodData.variacoes });
+                            }
+                        }
+                    } catch(e) { console.error("Erro ao devolver estoque", e); }
+                }
+                carregarProdutosAdmin(); 
+            }
             
             c.historicoCompras.splice(idx, 1);
             
@@ -994,7 +995,34 @@
             document.getElementById('totalEntradas').innerText=`R$ ${tE.toFixed(2).replace('.',',')}`; document.getElementById('totalSaidas').innerText=`R$ ${tS.toFixed(2).replace('.',',')}`;
             document.getElementById('saldoGeral').innerText=`R$ ${(tE-tS).toFixed(2).replace('.',',')}`; document.getElementById('saldoGeral').style.color=(tE-tS)>=0?'#2e7d32':'#c62828';
         }
-        window.excluirLancamento = async (ts, mD) => { if(confirm("Excluir?")){ const r=doc(db,"caixa",mD); const s=await getDoc(r); if(s.exists()){ await setDoc(r,{lancamentos:s.data().lancamentos.filter(m=>m.data!==ts)}); carregarCaixa(); } } };
+        window.excluirLancamento = async (ts, mD) => { 
+            if(confirm("Excluir lançamento do caixa?\nSe for uma venda avulsa, as peças voltarão para o estoque!")) { 
+                const r=doc(db,"caixa",mD); const s=await getDoc(r); 
+                if(s.exists()){ 
+                    const lancamentos = s.data().lancamentos;
+                    const lanc = lancamentos.find(m => m.data === ts);
+                    if(lanc && lanc.itensVendidos && lanc.clienteId === 'avulso') {
+                        for (let iv of lanc.itensVendidos) {
+                            try {
+                                const pRef = doc(db, "produtos", iv.id);
+                                const pSnap = await getDoc(pRef);
+                                if(pSnap.exists()) {
+                                    let prodData = pSnap.data();
+                                    let vIdx = prodData.variacoes.findIndex(v => v.tamanho === iv.tam);
+                                    if(vIdx > -1) {
+                                        prodData.variacoes[vIdx].quantidade += iv.qtd;
+                                        await updateDoc(pRef, { variacoes: prodData.variacoes });
+                                    }
+                                }
+                            } catch(e) {}
+                        }
+                        carregarProdutosAdmin();
+                    }
+                    await setDoc(r,{lancamentos: lancamentos.filter(m=>m.data!==ts)}); 
+                    carregarCaixa(); carregarDashboard(); 
+                } 
+            } 
+        };
         
         if(document.getElementById('formCaixa')){
             document.getElementById('formCaixa').onsubmit = async(e) => { e.preventDefault(); const d=document.getElementById('caixaDataManual').value; const mA=d.slice(0,7); const r=doc(db,"caixa",mA); const s=await getDoc(r); let l=s.exists()?s.data().lancamentos:[]; l.push({descricao:document.getElementById('caixaDesc').value, valor:parseFloat(document.getElementById('caixaValor').value), tipo:document.getElementById('caixaTipo').value, data:new Date(d+"T12:00:00").getTime()}); await setDoc(r,{lancamentos:l}); e.target.reset(); document.getElementById('caixaDataManual').valueAsDate=new Date(); carregarCaixa(); };
@@ -1032,7 +1060,14 @@
                     if(h.tipo === 'compra') {
                         if(new Date(h.data).toISOString().slice(0,7) === mesFiltro) {
                             gastoClientePeriodo += h.valor;
-                            if(h.prodId) { prodRanking[h.prodId] = prodRanking[h.prodId] || { nome: h.prodNome, total: 0, qtd: 0 }; prodRanking[h.prodId].total += h.valor; prodRanking[h.prodId].qtd += 1; }
+                            if(h.itensVendidos) {
+                                h.itensVendidos.forEach(iv => {
+                                    const pNome = pMemoria[iv.id] ? pMemoria[iv.id].nome : 'Peça Excluída';
+                                    prodRanking[iv.id] = prodRanking[iv.id] || { nome: pNome, total: 0, qtd: 0 }; 
+                                    prodRanking[iv.id].total += h.valor; // Rateio ideal precisaria do preço do item.
+                                    prodRanking[iv.id].qtd += iv.qtd; 
+                                });
+                            }
                         }
                     }
                 });
@@ -1044,7 +1079,7 @@
             else topCliDiv.innerHTML = '<p style="font-size:13px; color:#666;">Sem vendas neste mês.</p>';
 
             const topProdDiv = document.getElementById('dashTopProdutos'); const sortedProd = Object.entries(prodRanking).sort((a,b) => b[1].qtd - a[1].qtd).slice(0, 5);
-            if(sortedProd.length > 0) topProdDiv.innerHTML = sortedProd.map(([id, info], i) => `<div class="ranking-item"><span>${i+1}º ${info.nome} (${info.qtd}x)</span><b style="color:var(--dourado);">R$ ${info.total.toFixed(2).replace('.',',')}</b></div>`).join('');
+            if(sortedProd.length > 0) topProdDiv.innerHTML = sortedProd.map(([id, info], i) => `<div class="ranking-item"><span>${i+1}º ${info.nome} (${info.qtd}x)</span></div>`).join('');
             else topProdDiv.innerHTML = '<p style="font-size:13px; color:#666;">Sem vendas neste mês.</p>';
         }
 
@@ -1471,18 +1506,20 @@
                     }
                 }
 
+                const itensVendidosArr = [];
                 for (let item of ped.itens) {
                     const prod = pMemoria[item.idProd || item.id];
                     const vIdx = prod.variacoes.findIndex(v => v.tamanho === item.tam);
                     prod.variacoes[vIdx].quantidade -= item.qtd;
                     await updateDoc(doc(db, "produtos", item.idProd || item.id), { variacoes: prod.variacoes });
+                    itensVendidosArr.push({ id: item.idProd || item.id, tam: item.tam, qtd: item.qtd });
                 }
 
                 const descVenda = `Pedido Site #${ped.codigo} - ${ped.itens.length} peças`;
 
                 if(ped.clienteId !== 'avulso') {
                     const nHist = cliMemoria[ped.clienteId].historicoCompras || [];
-                    nHist.push({ data: Date.now(), tipo: 'compra', descricao: descVenda, valor: valorFinal, pagamento: pag });
+                    nHist.push({ data: Date.now(), tipo: 'compra', descricao: descVenda, valor: valorFinal, pagamento: pag, itensVendidos: itensVendidosArr });
                     let nDiv = cliMemoria[ped.clienteId].divida || 0;
                     if (!pag.includes('entrada')) nDiv += valorFinal;
                     await updateDoc(doc(db, "clientes", ped.clienteId), { historicoCompras: nHist, divida: nDiv });
@@ -1491,7 +1528,7 @@
                 if (pag.includes('entrada')) {
                     const dRef = doc(db, "caixa", new Date().toISOString().slice(0, 7)); const sn = await getDoc(dRef); let lC = sn.exists() ? sn.data().lancamentos : [];
                     let txtPag = "PIX"; if(pag==='entrada_credito') txtPag="C.Créd"; else if(pag==='entrada_debito') txtPag="C.Déb"; else if(pag==='entrada_dinheiro') txtPag="Dinheiro";
-                    lC.push({ descricao: `${descVenda} - ${ped.clienteNome} [${txtPag}]`, valor: valorFinal, tipo: pag, data: Date.now() });
+                    lC.push({ descricao: `${descVenda} - ${ped.clienteNome} [${txtPag}]`, valor: valorFinal, tipo: pag, data: Date.now(), itensVendidos: itensVendidosArr, clienteId: ped.clienteId });
                     await setDoc(dRef, { lancamentos: lC });
                 }
 
